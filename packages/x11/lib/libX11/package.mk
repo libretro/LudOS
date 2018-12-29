@@ -30,3 +30,12 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-loadable-i18n \
                            --disable-ipv6 \
                            --without-launchd \
                            --without-lint"
+
+pre_make_target() {
+  echo '' > $PKG_BUILD/src/util/Makefile.am
+  $HOST_CC $PKG_BUILD/src/util/makekeys.c -o $PKG_BUILD/.$TARGET_NAME/src/util/makekeys
+}
+
+make_target() {
+  make V=1 CC=$CC AR=$AR LD=$LD CFLAGS="$TARGET_CFLAGS"
+}
