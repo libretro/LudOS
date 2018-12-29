@@ -51,6 +51,8 @@ hdmi_ignore_cec_init=1
 ################################################################################
 # End of default configuration
 ################################################################################
+disable_splash=1
+dtoverlay=vc4-kms-v3d
 
 ################################################################################
 # Include distribution specific config file if it exists.
