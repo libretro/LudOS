@@ -11,7 +11,7 @@ Environment=WAYLAND_DISPLAY=wayland-0
 Environment=SDL_MOUSE_RELATIVE=0
 Environment=HOME=/storage
 WorkingDirectory=/usr/bin/ludo
-ExecStart=/usr/bin/ludo/ludo -fullscreen
+ExecStart=/usr/bin/ludo/ludo -fullscreen -glver=21
 KillMode=process
 TimeoutStopSec=5
 Restart=always
