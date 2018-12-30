@@ -81,7 +81,7 @@
     OPENGL="mesa"
 
   # OpenGL-ES implementation to use (no / bcm2835-driver / mesa)
-    OPENGLES=""
+    OPENGLES="no"
 
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
