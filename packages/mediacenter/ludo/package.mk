@@ -13,7 +13,7 @@ PKG_SOURCE_NAME="Ludo-Linux-$ARCH-$PKG_VERSION.tar.gz"
 PKG_TOOLCHAIN="manual"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXext libdrm libXrandr libXcursor mesa"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXext libdrm libXrandr libXcursor"
 elif [ "$DISPLAYSERVER" = "weston" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland waylandpp"
   CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
