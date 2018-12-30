@@ -1,8 +1,9 @@
 [Unit]
 Description=Xorg Server
-Before=graphical.target kodi.service
+Before=graphical.target ludo.service
 After=multi-user.target
 ConditionKernelCommandLine=!installer
+Wants=xorg-configure@modesetting.service
 
 [Service]
 Type=notify
