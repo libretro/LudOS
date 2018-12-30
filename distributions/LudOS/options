@@ -16,12 +16,12 @@
 # Welcome Message for e.g. SSH Server (up to 5 Lines)
   GREETING0="##############################################"
   GREETING1="#                   LudOS                    #"
-  GREETING2="#      https://github.com/libretro/ludo      #"
+  GREETING2="#      https://github.com/libretro/LudOS     #"
   GREETING3="##############################################"
   GREETING4=""
 
 # Root password to integrate in the target system
-  ROOT_PASSWORD="libreelec"
+  ROOT_PASSWORD="ludos"
 
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="no"
@@ -213,7 +213,7 @@
   GET_HANDLER_SUPPORT="archive"
 
 # Partition labels for USB/SD installation media
-  DISTRO_BOOTLABEL="LIBREELEC"
+  DISTRO_BOOTLABEL="LUDOS"
   DISTRO_DISKLABEL="STORAGE"
 
 # Settings package name - blank if not required
