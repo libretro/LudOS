@@ -39,21 +39,23 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
 
+pre_configure_target() {
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
+                         -DCMAKE_BUILD_TYPE=MinSizeRel \
+                         -DCMAKE_C_FLAGS="$CFLAGS" \
+                         -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                         -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
+                         -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
+}
+
 make_host() {
-  ninja llvm-config llvm-tblgen
+  ninja $NINJA_OPTS llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
   cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
   cp -a bin/llvm-tblgen $TOOLCHAIN/bin
 }
-
-PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
-                       -DCMAKE_BUILD_TYPE=MinSizeRel \
-                       -DCMAKE_C_FLAGS="$CFLAGS" \
-                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
-                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
-                       -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
