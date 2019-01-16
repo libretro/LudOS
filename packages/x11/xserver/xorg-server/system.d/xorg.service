@@ -3,7 +3,6 @@ Description=Xorg Server
 Before=graphical.target ludo.service
 After=multi-user.target
 ConditionKernelCommandLine=!installer
-Requires=xorg-configure@modesetting.service
 
 [Service]
 Type=notify

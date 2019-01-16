@@ -1,0 +1,12 @@
+[Unit]
+Description=configure Xorg Server for modesetting
+
+ConditionKernelCommandLine=!installer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/xorg/xorg-configure modesetting
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical.target
