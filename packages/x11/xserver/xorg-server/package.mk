@@ -139,8 +139,5 @@ post_makeinstall_target() {
 }
 
 post_install() {
-  if listcontains "$GRAPHIC_DRIVERS" "vc4"; then
-    enable_service xorg-configure-modesetting.service
-  fi
   enable_service xorg.service
 }
