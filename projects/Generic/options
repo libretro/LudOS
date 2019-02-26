@@ -83,7 +83,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
+    FIRMWARE="misc-firmware wlan-firmware iwlwifi-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
@@ -97,4 +97,4 @@
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons
   # Space separated list is supported,
-    DRIVER_ADDONS="crazycat digital_devices dvb-latest"
+    DRIVER_ADDONS=""
