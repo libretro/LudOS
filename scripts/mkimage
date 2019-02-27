@@ -122,7 +122,7 @@ if [ "${BOOTLOADER}" = "syslinux" ]; then
   echo "image: creating bootloader configuration..."
   cat << EOF > "${LE_TMP}/syslinux.cfg"
 SAY Wait for installer to start or press <TAB> for more options (live, run)
-DEFAULT installer
+DEFAULT run
 TIMEOUT 50
 PROMPT 1
 
@@ -141,7 +141,7 @@ EOF
 
   cat << EOF > "${LE_TMP}/grub.cfg"
 set timeout="25"
-set default="Installer"
+set default="Run"
 menuentry "Installer" {
 	search --set -f /KERNEL
 	linux /KERNEL boot=UUID=${UUID_SYSTEM} installer quiet tty vga=current
