@@ -138,4 +138,3 @@
   # Space separated list is supported,
     DRIVER_ADDONS=""
 
-    EXTRA_CMDLINE="ssh"
