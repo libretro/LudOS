@@ -31,10 +31,6 @@ PKG_LONGDESC="Macbook keyboard, touchpad and touchbar driver"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#post_unpack() {
-#  mv $BUILD/macbook12-spi-driver-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
-#}
-
 pre_make_target() {
   unset LDFLAGS
 }
