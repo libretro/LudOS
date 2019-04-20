@@ -11,7 +11,7 @@ Environment=WAYLAND_DISPLAY=wayland-0
 Environment=SDL_MOUSE_RELATIVE=0
 Environment=HOME=/storage
 EnvironmentFile=/etc/os-release
-ExecStart=/usr/bin/ludo -de
+ExecStart=/usr/bin/ludo -ludos
 KillMode=process
 TimeoutStopSec=5
 Restart=always
