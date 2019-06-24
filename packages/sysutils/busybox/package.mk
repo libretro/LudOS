@@ -182,7 +182,7 @@ post_install() {
   add_group nogroup 65534
 
   enable_service shell.service
-  enable_service show-version.service
+  #enable_service show-version.service
   enable_service var.mount
   enable_service fs-resize.service
   listcontains "${FIRMWARE}" "rpi-eeprom" && enable_service rpi-flash-firmware.service
