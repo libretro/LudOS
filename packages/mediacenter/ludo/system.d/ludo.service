@@ -1,0 +1,22 @@
+[Unit]
+Description=Ludo
+After=network-online.target graphical.target
+Requires=graphical.target
+Wants=network-online.target
+
+[Service]
+Environment=__GL_YIELD=USLEEP
+Environment=DISPLAY=:0.0
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=SDL_MOUSE_RELATIVE=0
+Environment=HOME=/storage
+EnvironmentFile=/etc/os-release
+ExecStart=/usr/bin/ludo -ludos
+KillMode=process
+TimeoutStopSec=5
+Restart=always
+RestartSec=2
+StartLimitInterval=0
+
+[Install]
+WantedBy=ludo.target
