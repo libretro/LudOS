@@ -74,16 +74,16 @@
     ALSA_SUPPORT="yes"
 
   # OpenGL(X) implementation to use (no / mesa)
-    OPENGL="no"
+    OPENGL="mesa"
 
   # OpenGL-ES implementation to use (no / bcm2835-driver / mesa)
-    OPENGLES="bcm2835-driver"
+    OPENGLES="no"
 
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
 
   # Displayserver to use (x11 / no)
-    DISPLAYSERVER="no"
+    DISPLAYSERVER="x11"
 
   # Windowmanager to use (fluxbox / none)
     WINDOWMANAGER="none"
@@ -91,7 +91,7 @@
   # Xorg Graphic drivers to use (all / vc4 / none)
   # Space separated list is supported,
   # e.g. GRAPHIC_DRIVERS="vc4"
-    GRAPHIC_DRIVERS=""
+    GRAPHIC_DRIVERS="vc4"
 
   # Use a vendor specific KODI repo
     KODI_VENDOR="raspberrypi"
@@ -105,7 +105,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware brcmfmac_sdio-firmware-rpi"
+    FIRMWARE="misc-firmware wlan-firmware brcmfmac_sdio-firmware-rpi"
 
   # build with installer (yes / no)
     INSTALLER_SUPPORT="no"
@@ -129,4 +129,5 @@
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons
   # Space separated list is supported,
-    DRIVER_ADDONS="crazycat dvb-latest"
+    DRIVER_ADDONS=""
+
