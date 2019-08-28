@@ -40,6 +40,7 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/etc
     echo '{
+  "menu_showhiddenfiles": false,
   "video_fullscreen": true,
   "cores_dir": "/usr/lib/libretro",
   "assets_dir": "/usr/share/ludo/assets",
