@@ -1,6 +1,6 @@
 # LudOS
 
-LudOS is a 'Just enough OS' Linux distribution for running [Ludo](https://ludo.libretro.com) on hardware like PC or the Raspberry Pi. LudOS is based on [LibreELEC](https://libreelec.tv) 9.0 with a few minor changes.
+LudOS is a 'Just enough OS' Linux distribution for running [Ludo](https://ludo.libretro.com) on hardware like PC or the Raspberry Pi. LudOS is based on [LibreELEC](https://libreelec.tv) 9.2 with a few minor changes.
 
 ## Installation
 
