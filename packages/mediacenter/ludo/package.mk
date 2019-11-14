@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/ludo"
 PKG_DEPENDS_TARGET="toolchain openal-soft"
 PKG_LONGDESC="A libretro frontend written in golang."
-PKG_VERSION="0.9.11"
+PKG_VERSION="0.10.0"
 PKG_URL="https://github.com/libretro/ludo/releases/download/v$PKG_VERSION/Ludo-Linux-$ARCH-$PKG_VERSION.tar.gz"
 PKG_SOURCE_NAME="Ludo-Linux-$ARCH-$PKG_VERSION.tar.gz"
 PKG_TOOLCHAIN="manual"
@@ -33,26 +33,22 @@ makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
     cp -r ./cores/* $INSTALL/usr/lib/libretro
 
-  GLVERSION="3.2"
-  if [ "$GRAPHIC_DRIVERS" = "vc4" ]; then
-    GLVERSION="2.1"
-  fi
-
   mkdir -p $INSTALL/etc
-    echo '{
-  "menu_showhiddenfiles": false,
-  "video_fullscreen": true,
-  "cores_dir": "/usr/lib/libretro",
-  "assets_dir": "/usr/share/ludo/assets",
-  "database_dir": "/usr/share/ludo/database",
-  "savestates_dir": "/storage/savestates",
-  "savefiles_dir": "/storage/savefiles",
-  "screenshots_dir": "/storage/screenshots",
-  "system_dir": "/storage/system",
-  "playlists_dir": "/storage/playlists",
-  "thumbnail_dir": "/storage/thumbnails",
-  "video_gl_version": "'${GLVERSION}'"
-}' > $INSTALL/etc/ludo.json
+    echo '
+video_fullscreen = true
+cores_dir = "/usr/lib/libretro"
+assets_dir = "/usr/share/ludo/assets"
+database_dir = "/usr/share/ludo/database"
+playlists_dir = "/storage/playlists"
+savefiles_dir = "/storage/savefiles"
+savestates_dir = "/storage/savestates"
+screenshots_dir = "/storage/screenshots"
+system_dir = "/storage/system"
+thumbnail_dir = "/storage/thumbnails"
+bluetooth_service = false
+samba_service = false
+ssh_service = false
+' > $INSTALL/etc/ludo.json
 }
 
 post_install() {
