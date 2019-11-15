@@ -48,7 +48,7 @@ thumbnail_dir = "/storage/thumbnails"
 bluetooth_service = false
 samba_service = false
 ssh_service = false
-' > $INSTALL/etc/ludo.json
+' > $INSTALL/etc/ludo.toml
 }
 
 post_install() {
