@@ -1,3 +1,7 @@
+104
+- fix getting default audio device
+- support for latest Chrome
+
 103
 - add flag for dark mode
 
