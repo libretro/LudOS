@@ -3,6 +3,8 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
+# curl -s http://dl.google.com/linux/chrome/deb/dists/stable/main/binary-amd64/Packages | grep -B 1 Version
+PKG_VERSION_NUMBER="87.0.4280.66"
 PKG_REV="104"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
@@ -33,6 +35,7 @@ addon() {
 
   # config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
+  echo "CHROME_VERSION=${PKG_VERSION_NUMBER}" >$ADDON_BUILD/$PKG_ADDON_ID/config/chrome.version
 
   # atk
   cp -PL $(get_build_dir atk)/.$TARGET_NAME/atk/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
