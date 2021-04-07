@@ -1,4 +1,6 @@
-mport sys
+#!/usr/bin/env python
+
+import sys
 
 devices = {
 #  'project' : {
