@@ -17,6 +17,11 @@ PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
   rockchip-4.4)
+    PKG_VERSION="8394b6656aeea884ae576a85c11d6280595445fd"
+    PKG_URL="https://github.com/mrfixit2001/rockchip-kernel/archive/$PKG_VERSION.tar.gz"
+    PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
+    ;;
+  odroidgoA-4.4)
     PKG_VERSION="fbfe5c30bf5643f44cc8c87c9b53b1ba2a0bfa49"
     PKG_SHA256="ca4071dcd23a6c5b8051b814ec6bcf2a73e0569422156be143ac3f50df3f7d6b"
     PKG_URL="https://github.com/hardkernel/linux/archive/$PKG_VERSION.tar.gz"
