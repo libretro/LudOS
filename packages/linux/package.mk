@@ -5,8 +5,8 @@
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
-PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain linux:host kmod:host xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
+PKG_DEPENDS_HOST="ccache:host openssl:host"
+PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS $(get_pkg_directory busybox)"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
@@ -17,41 +17,20 @@ PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
   rockchip-4.4)
-    PKG_VERSION="8394b6656aeea884ae576a85c11d6280595445fd"
-    PKG_URL="https://github.com/mrfixit2001/rockchip-kernel/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
-    ;;
-  odroidgoA-4.4)
     PKG_VERSION="fbfe5c30bf5643f44cc8c87c9b53b1ba2a0bfa49"
     PKG_SHA256="ca4071dcd23a6c5b8051b814ec6bcf2a73e0569422156be143ac3f50df3f7d6b"
     PKG_URL="https://github.com/hardkernel/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   raspberrypi)
-    PKG_VERSION="edc21a35b9b7b427716564c3b744ed2a89fcd19a" # 5.4.71
-    PKG_SHA256="bce0429841ef280d5ae991a261954f90ad6de35a091b59714f1535c8d1f3334e"
+    PKG_VERSION="abaa3760da89d6fb38e55473fffc9a31dd0b1d7a" # 4.19.127
+    PKG_SHA256="b7345333ee90949dabc8e7fa184c443dc43781bdd3703e2203ad084274b50f24"
     PKG_URL="https://github.com/raspberrypi/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="rpi"
-    ;;
-  odroidxu4-4.14)
-    PKG_VERSION="864c4519b77763274b61a035b33bc92f71084b59"
-    PKG_SHA256="4cbafde263437b5c9ab5c4a2496866eb19922fb4c80cf5c6ef3c8b65cf1936be"
-    PKG_URL="https://github.com/hardkernel/linux/archive/$PKG_VERSION.tar.gz"
-    ;;
-  odroidxu3-5.4)
-    PKG_VERSION="5e12d570f207e48f321029b15026ae7c4ab21217"
-    PKG_URL="https://github.com/hardkernel/linux/archive/$PKG_VERSION.tar.gz"
-    ;;
-  mainline-5.10)
-    PKG_VERSION="5.10.26"
-    PKG_SHA256="fc532833f1ac167f363f1b9de85db39d2d635ab516f66dc381bdd70804601482"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="default"
     ;;
   *)
-    PKG_VERSION="5.1.18"
-    PKG_SHA256="6013e7dcf59d7c1b168d8edce3dbd61ce340ff289541f920dbd0958bef98f36a"
+    PKG_VERSION="5.1.16"
+    PKG_SHA256="8a3e55be3e788700836db6f75875b4d3b824a581d1eacfc2fcd29ed4e727ba3e"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
@@ -70,10 +49,8 @@ if [ "$PKG_BUILD_PERF" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET binutils elfutils libunwind zlib openssl"
 fi
 
-if [ "$TARGET_ARCH" = "x86_64" -o "$TARGET_ARCH" = "i386" ]; then
+if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-ucode:host kernel-firmware elfutils:host pciutils"
-elif [ "$TARGET_ARCH" = "arm" -a "$DEVICE" = "iMX6" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kernel-firmware"
 fi
 
 if [[ "$KERNEL_TARGET" = uImage* ]]; then
@@ -83,8 +60,8 @@ fi
 post_patch() {
   cp $PKG_KERNEL_CFG_FILE $PKG_BUILD/.config
 
-  sed -i -e "s|^CONFIG_INITRAMFS_SOURCE=.*$|CONFIG_INITRAMFS_SOURCE=\"$(kernel_initramfs_confs) $BUILD/initramfs\"|" $PKG_BUILD/.config
-  sed -i -e "/CONFIG_INITRAMFS_ROOT_UID/d" -e "/CONFIG_INITRAMFS_ROOT_GID/d" -e "/CONFIG_INITRAMFS_SOURCE=.../a CONFIG_INITRAMFS_ROOT_UID=0\nCONFIG_INITRAMFS_ROOT_GID=0" $PKG_BUILD/.config
+  sed -i -e "s|^CONFIG_INITRAMFS_SOURCE=.*$|CONFIG_INITRAMFS_SOURCE=\"$BUILD/image/initramfs.cpio\"|" $PKG_BUILD/.config
+  sed -i -e '/^CONFIG_INITRAMFS_SOURCE=*./ a CONFIG_INITRAMFS_ROOT_UID=0\nCONFIG_INITRAMFS_ROOT_GID=0' $PKG_BUILD/.config
 
   # set default hostname based on $DISTRONAME
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
@@ -122,9 +99,6 @@ post_patch() {
       [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
     done
   fi
-
-  #host gcc 10 build issue
-  sed -i '/YYLTYPE yylloc/d' $PKG_BUILD/scripts/dtc/dtc-lexer.l
 }
 
 make_host() {
@@ -153,29 +127,18 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  ( cd $ROOT
-    rm -rf $BUILD/initramfs
-    $SCRIPTS/install initramfs
-  )
-  pkg_lock_status "ACTIVE" "linux:target" "build"
-
-  if [ "$TARGET_ARCH" = "x86_64" -o "$TARGET_ARCH" = "i386" ]; then
+  if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/.copied-firmware/{amdgpu,amd-ucode,i915,nvidia,radeon,e100,rtl_nic} $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
-  elif [ "$TARGET_ARCH" = "arm" -a "$DEVICE" = "iMX6" ]; then
-      mkdir -p $PKG_BUILD/external-firmware
-        cp -a $(get_build_dir kernel-firmware)/.copied-firmware/imx $PKG_BUILD/external-firmware
-  fi
+      cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,e100,rtl_nic} $PKG_BUILD/external-firmware
 
-  if [ -d $PKG_BUILD/external-firmware/ ]; then
+    cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
+
     FW_LIST="$(find $PKG_BUILD/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
     sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" $PKG_BUILD/.config
-    sed -i -e "/CONFIG_EXTRA_FIRMWARE_DIR/d" -e "/CONFIG_EXTRA_FIRMWARE=.../a CONFIG_EXTRA_FIRMWARE_DIR=\"external-firmware\"" $PKG_BUILD/.config
   fi
 
-  kernel_make olddefconfig
+  kernel_make oldconfig
 
   # regdb (backward compatability with pre-4.15 kernels)
   if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
@@ -184,24 +147,17 @@ pre_make_target() {
 }
 
 make_target() {
-  # arm64 target does not support creating uImage.
-  # Build Image first, then wrap it using u-boot's mkimage.
-  if [[ "$TARGET_KERNEL_ARCH" = "arm64" && "$KERNEL_TARGET" = uImage* ]]; then
-    if [ -z "$KERNEL_UIMAGE_LOADADDR" -o -z "$KERNEL_UIMAGE_ENTRYADDR" ]; then
-      die "ERROR: KERNEL_UIMAGE_LOADADDR and KERNEL_UIMAGE_ENTRYADDR have to be set to build uImage - aborting"
-    fi
-    KERNEL_UIMAGE_TARGET="$KERNEL_TARGET"
-    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
-  fi
-
-  kernel_make TOOLCHAIN="$TOOLCHAIN" $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD modules
+  kernel_make modules
+  kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
+  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
+  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf
 
       # arch specific perf build args
       case "$TARGET_ARCH" in
-        x86_64|i386)
+        x86_64)
           PERF_BUILD_ARGS="ARCH=x86"
           ;;
         aarch64)
@@ -228,6 +184,27 @@ make_target() {
         cp perf $INSTALL/usr/bin
     )
   fi
+
+  ( cd $ROOT
+    rm -rf $BUILD/initramfs
+    $SCRIPTS/install initramfs
+  )
+  pkg_lock_status "ACTIVE" "linux:target" "build"
+
+  # arm64 target does not support creating uImage.
+  # Build Image first, then wrap it using u-boot's mkimage.
+  if [[ "$TARGET_KERNEL_ARCH" == "arm64" && "$KERNEL_TARGET" == uImage* ]]; then
+    if [ -z "$KERNEL_UIMAGE_LOADADDR" -o -z "$KERNEL_UIMAGE_ENTRYADDR" ]; then
+      die "ERROR: KERNEL_UIMAGE_LOADADDR and KERNEL_UIMAGE_ENTRYADDR have to be set to build uImage - aborting"
+    fi
+    KERNEL_UIMAGE_TARGET="$KERNEL_TARGET"
+    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
+  fi
+
+  # the modules target is required to get a proper Module.symvers
+  # file with symbols from built-in and external modules.
+  # Without that it'll contain only the symbols from the kernel
+  kernel_make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD modules
 
   if [ -n "$KERNEL_UIMAGE_TARGET" ] ; then
     # determine compression used for kernel image
@@ -260,10 +237,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
-
   if [ "$BOOTLOADER" = "u-boot" ]; then
     mkdir -p $INSTALL/usr/share/bootloader
     for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
@@ -276,11 +249,7 @@ makeinstall_target() {
 
     # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream
     # drivers and decent USB support) as these are not required by LibreELEC
-    if [ "$PROJECT" = "RPi" -a "$ARCH" = "aarch64" ]; then
-      cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/broadcom/*.dtb $INSTALL/usr/share/bootloader
-    else
-      cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb $INSTALL/usr/share/bootloader
-    fi
+    cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb $INSTALL/usr/share/bootloader
     rm -f $INSTALL/usr/share/bootloader/bcm283*.dtb
 
     # install overlay dtbs
@@ -288,6 +257,31 @@ makeinstall_target() {
       cp $dtb $INSTALL/usr/share/bootloader/overlays 2>/dev/null || :
     done
     cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/README $INSTALL/usr/share/bootloader/overlays
+  fi
+}
+
+make_init() {
+ : # reuse make_target()
+}
+
+makeinstall_init() {
+  if [ -n "$INITRAMFS_MODULES" ]; then
+    mkdir -p $INSTALL/etc
+    mkdir -p $INSTALL/usr/lib/modules
+
+    for i in $INITRAMFS_MODULES; do
+      module=`find .install_pkg/$(get_full_module_dir)/kernel -name $i.ko`
+      if [ -n "$module" ]; then
+        echo $i >> $INSTALL/etc/modules
+        cp $module $INSTALL/usr/lib/modules/`basename $module`
+      fi
+    done
+  fi
+
+  if [ "$UVESAFB_SUPPORT" = yes ]; then
+    mkdir -p $INSTALL/usr/lib/modules
+      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
+      cp $uvesafb $INSTALL/usr/lib/modules/`basename $uvesafb`
   fi
 }
 
