@@ -36,7 +36,7 @@
     OPENGLES="libmali"
 
   # Displayserver to use (weston / no)
-    DISPLAYSERVER="no"
+    DISPLAYSERVER="x11"
 
   # Windowmanager to use (fluxbox / none)
     WINDOWMANAGER="none"
