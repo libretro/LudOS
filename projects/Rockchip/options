@@ -5,6 +5,9 @@
   # Bootloader to use (syslinux / u-boot / bcm2835-bootloader)
     BOOTLOADER="u-boot"
 
+  # U-Boot firmware package(s) to use
+    UBOOT_FIRMWARE="rkbin"
+
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="${LINUX:-rockchip-4.4}"
@@ -32,11 +35,8 @@
   # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q)
     OPENGLES="libmali"
 
-  # include uvesafb support (yes / no)
-    UVESAFB_SUPPORT="no"
-
   # Displayserver to use (weston / no)
-    DISPLAYSERVER="no"
+    DISPLAYSERVER="x11"
 
   # Windowmanager to use (fluxbox / none)
     WINDOWMANAGER="none"
@@ -52,13 +52,14 @@
   # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap)
     KODIPLAYER_DRIVER="$OPENGLES"
 
-  # Modules to install in initramfs for early boot
-    INITRAMFS_MODULES=""
-
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
     FIRMWARE="misc-firmware wlan-firmware dvb-firmware rockchip-firmware"
+
+    if [ "$DISTRO" = "LudOS" ]; then
+      FIRMWARE="misc-firmware wlan-firmware rockchip-firmware"
+    fi
 
   # additional packages to install
     ADDITIONAL_PACKAGES="dtc"
@@ -79,6 +80,10 @@
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
     DRIVER_ADDONS="dvb-latest"
+
+    if [ "$DISTRO" = "LudOS" ]; then
+      DRIVER_ADDONS=""
+    fi
 
   # debug tty path
     DEBUG_TTY="/dev/ttyS2"

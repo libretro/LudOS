@@ -50,6 +50,12 @@ devices = {
       'sapphire' : { 'dtb' : 'rk3399-sapphire.dtb', 'config' : 'evb-rk3399_config' },
     },
     'TinkerBoard' : { 'rk3288' : { 'dtb' : 'rk3288-miniarm.dtb', 'config' : 'tinker-rk3288_config' }, },
+    'OdroidGoAdvance': {
+      'odroidgo2': { 'dtb': 'rk3326-odroidgo2-linux.dtb', 'config': 'odroidgoa_defconfig' },
+      'rg351p': { 'dtb': 'rk3326-rg351p-linux.dtb', 'config': 'odroidgoa_defconfig' },
+      'rg351v': { 'dtb': 'rk3326-rg351v-linux.dtb', 'config': 'odroidgoa_defconfig' },
+      'gameforce-chi': { 'dtb': 'rk3326-gameforce-linux.dtb', 'config': 'odroidgoa_defconfig' },
+    },
   },
 }
 
