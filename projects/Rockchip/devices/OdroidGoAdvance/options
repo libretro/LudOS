@@ -43,10 +43,11 @@
         EXTRA_CMDLINE="${EXTRA_CMDLINE} fbcon=rotate:3"
       fi
     }
-    
-  # Custom libmali package
-    OPENGLES="mali-odroidgo2"
 
+    OPENGL="mesa"
+    OPENGLES="no"
+    GRAPHIC_DRIVERS="panfrost"
+ 
   # Linux and U-Boot
     LINUX="odroidgoA-4.4"
    
