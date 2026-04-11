@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/ludo"
 PKG_DEPENDS_TARGET="toolchain openal-soft"
 PKG_LONGDESC="A libretro frontend written in golang."
-PKG_VERSION="0.21.0"
+PKG_VERSION="0.21.2"
 PKG_TOOLCHAIN="manual"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
