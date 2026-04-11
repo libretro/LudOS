@@ -1,6 +1,6 @@
 [Unit]
 Description=Broadcom SDIO Firmware Symlink Service
-Before=kodi.service
+Before=ludo.service
 
 [Service]
 Type=oneshot

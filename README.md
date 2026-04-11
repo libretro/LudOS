@@ -1,19 +1,15 @@
-# LibreELEC
+# LudOS
 
-LibreELEC is a 'Just enough OS' Linux distribution for the award-winning [Kodi](https://kodi.tv) software on popular mediacentre hardware. Further information on the project can be found on the [LibreELEC website](https://libreelec.tv).
+LudOS is a 'Just enough OS' Linux distribution for running [Ludo](https://ludo.libretro.com) on hardware like PC or the Raspberry Pi. LudOS is based on [LibreELEC](https://libreelec.tv) 12.2 with a few minor changes.
 
-**Issues & Support**
+## Installation
 
-Please ask questions in the [LibreELEC forum: Help & Support](https://forum.libreelec.tv/forum-3.html) or ask a member of project staff in the #libreelec IRC channel on Libera.Chat. Please report bugs via [GitHub Issues](https://github.com/LibreELEC/LibreELEC.tv/issues).
+To install LudOS, you can download the latest release and flash it on a bootable media like a USB drive or an SD card. Flashing can be done using `dd` or [Etcher](https://www.balena.io/etcher/). Just like you would install LibreELEC or Lakka. Installing LudOS will wipe all previous data on your disk.
 
-**Donations**
+## Support
 
-Contributions towards current project funding goals can be made via [OpenCollective](https://opencollective.com/libreelec/donate).
+LudOS is not ready for production and contains bugs. However, you can get some help on our [Discord](https://discordapp.com/invite/YXYSEQD).
 
-**License**
+## License
 
-LibreELEC original code is released under [GPLv2](https://www.gnu.org/licenses/gpl-2.0.html).
-
-**Copyright**
-
-As LibreELEC includes code from many upstream projects it has many copyright owners; notably [OpenELEC](https://openelec.tv) which we forked from after disagreeing with project direction and management, and [OpenBricks/GeeXboX](https://github.com/OpenBricks/openbricks/blob/master/AUTHORS) the uncredited source of the original 2009 build system. LibreELEC makes no claim of copyright on any upstream code. However all original LibreELEC authored code is copyright LibreELEC.tv. Patches to upstream code have the same license as the upstream project unless specified otherwise. For a complete copyright list please checkout the source code to examine license headers. Unless expressly stated otherwise all code submitted to the LibreELEC project (in any form) is licensed under [GPLv2](https://www.gnu.org/licenses/gpl-2.0.html) and copyright is donated to the project. This approach gives the project freedom to maintain the code without the overhead of preserving contact with every submitter, e.g. GPLv3. You are free to retain copyright by adding your copyright header to each submitted code page. If you submit code that is not your own work it is your responsibility to place a header stating the copyright.
+The license of LudOS is the same as the one of LibreELEC, but adds some packages like Snes9x or Genesis Plus GX that are protected by a Non-Commercial license. Thus, you can't sell LudOS or a derivative without removing these packages.

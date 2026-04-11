@@ -165,7 +165,6 @@ post_install() {
   enable_service fs-resize.service
   enable_service ledfix.service
   enable_service shell.service
-  enable_service show-version.service
   enable_service var.mount
   enable_service locale.service
 
