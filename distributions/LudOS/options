@@ -217,7 +217,7 @@
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
 # mediacenter also automount internally drives at boottime via udev (yes / no)
-  UDEVIL="yes"
+  UDEVIL="no"
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
