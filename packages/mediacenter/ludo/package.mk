@@ -22,6 +22,9 @@ fi
 
 if [ ! "$OPENGL" = "no" ]; then
   PKG_DEPENDS_TARGET+=" $OPENGL"
+  if [ "${OPENGL_SUPPORT}" = "yes" ]; then
+    PKG_DEPENDS_TARGET+=" libglvnd"
+  fi
 fi
 
 makeinstall_target() {
