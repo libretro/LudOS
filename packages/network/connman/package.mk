@@ -82,6 +82,8 @@ post_makeinstall_target() {
         -e "s|^# AllowHostnameUpdates.*|AllowHostnameUpdates = false|g" \
         -e "s|^# PersistentTetheringMode.*|PersistentTetheringMode = true|g" \
         -e "s|^# NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb|NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,docker,veth,zt|g"
+    echo "TimeUpdates=manual" >> $INSTALL/etc/connman/main.conf
+    echo "TimezoneUpdates=manual" >> $INSTALL/etc/connman/main.conf
 
   mkdir -p ${INSTALL}/usr/share/connman/
     cp ${PKG_DIR}/config/settings ${INSTALL}/usr/share/connman/

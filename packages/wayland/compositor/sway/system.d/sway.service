@@ -1,6 +1,6 @@
 [Unit]
 Description=Sway Wayland Compositor
-Before=graphical.target kodi.service
+Before=graphical.target ludo.service
 After=multi-user.target
 ConditionKernelCommandLine=!installer
 

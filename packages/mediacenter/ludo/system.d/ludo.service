@@ -1,0 +1,18 @@
+[Unit]
+Description=Ludo
+After=network-online.target graphical.target
+Requires=graphical.target
+Wants=network-online.target
+
+[Service]
+EnvironmentFile=/usr/lib/ludo/ludo.conf
+EnvironmentFile=/etc/os-release
+ExecStart=/usr/lib/ludo/ludo.sh -ludos
+KillMode=process
+TimeoutStopSec=5
+Restart=always
+RestartSec=2
+StartLimitInterval=0
+
+[Install]
+WantedBy=ludo.target
