@@ -27,6 +27,21 @@ fi
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
     cp ./ludo $INSTALL/usr/bin/ludo
+  mkdir -p $INSTALL/usr/lib/ludo
+    cp ${PKG_DIR}/scripts/ludo.sh ${INSTALL}/usr/lib/ludo/ludo.sh
+    chmod +x ${INSTALL}/usr/lib/ludo/ludo.sh
+    cat > ${INSTALL}/usr/lib/ludo/ludo.conf <<EOF
+HOME=/storage
+SDL_MOUSE_RELATIVE=0
+EOF
+    if [ "${DISPLAYSERVER}" = "x11" ]; then
+      echo "DISPLAY=:0.0" >> ${INSTALL}/usr/lib/ludo/ludo.conf
+    elif [ "${DISPLAYSERVER}" = "wl" ]; then
+      echo "WAYLAND_DISPLAY=wayland-1" >> ${INSTALL}/usr/lib/ludo/ludo.conf
+    fi
+    if listcontains "${GRAPHIC_DRIVERS}" "nvidia"; then
+      echo "__GL_YIELD=USLEEP" >> ${INSTALL}/usr/lib/ludo/ludo.conf
+    fi
   mkdir -p $INSTALL/usr/share/ludo
     cp -r ./assets $INSTALL/usr/share/ludo/assets
     cp -r ./database $INSTALL/usr/share/ludo/database
