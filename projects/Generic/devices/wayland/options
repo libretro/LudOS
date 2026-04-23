@@ -1,5 +1,5 @@
 # OpenGL(X) implementation to use (mesa / no)
-  OPENGL="no"
+  OPENGL="mesa"
 
 # OpenGL-ES implementation to use (mesa / no)
   OPENGLES="mesa"
